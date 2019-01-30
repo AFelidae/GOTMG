@@ -13,6 +13,8 @@ var mesh;
 
 var scale = 100
 
+var startPos = {x:4*scale,z:4*scale}
+
 function onWindowResize(){
 	camera.aspect = window.innerWidth / window.innerHeight;
 	camera.updateProjectionMatrix();
@@ -83,6 +85,21 @@ function Level(){
 	    }
 	  }
 	}
+
+  this.collision = function(posA, posB){
+    if(posB.x < 0) posB.x = 0
+    if(posB.z < 0) posB.z = 0
+    if(posB.x > (this.level[0].length-1)*scale  - scale/2) posB.x = (this.level[0].length-1)*scale -scale/2
+    if(posB.z > (this.level.length-1)*scale  - scale/2) posB.z = (this.level.length-1)*scale - scale/2
+
+
+    if(this.level[Math.floor(posB.z/scale + 0.5)][Math.floor(posB.x/scale + 0.5)].wall){
+      posB = posA
+    }
+    return posB
+  }
+
+
   /*Todo:Fix this
 	this.clear = function(){
 		for(y=0;y<this.level.length;y++){
