@@ -86,17 +86,24 @@ function Level(){
 	  }
 	}
 
-  this.collision = function(posA, posB){
-    if(posB.x < 0) posB.x = 0
-    if(posB.z < 0) posB.z = 0
-    if(posB.x > (this.level[0].length-1)*scale  - scale/2) posB.x = (this.level[0].length-1)*scale -scale/2
-    if(posB.z > (this.level.length-1)*scale  - scale/2) posB.z = (this.level.length-1)*scale - scale/2
-
-
-    if(this.level[Math.floor(posB.z/scale + 0.5)][Math.floor(posB.x/scale + 0.5)].wall){
-      posB = posA
+  this.collision = function(oldPos,newPos){
+    if(this.level[Math.floor((newPos.z+scale/2)/scale)][Math.floor((newPos.x+scale/2)/scale)].wall){
+    //renderer.setClearColor(0xFF0000, 1)
+      if(this.level[Math.floor((newPos.z+scale/2)/scale)][Math.floor((oldPos.x+scale/2)/scale)].wall){
+        newPos.z = Math.floor(newPos.z/scale)*scale + scale/2
+        if(newPos.z > oldPos.z) newPos.z -= 2.1
+        if(newPos.z < oldPos.z) newPos.z += 2.1
+      }
+      if(this.level[Math.floor((oldPos.z+scale/2)/scale)][Math.floor((newPos.x+scale/2)/scale)].wall){
+        newPos.x = Math.floor(newPos.x/scale) * scale + scale/2
+        if(newPos.x > oldPos.x) newPos.x -= 2.1
+        if(newPos.x < oldPos.x) newPos.x += 2.1
+      }
     }
-    return posB
+    else{
+      renderer.setClearColor(0x87CEEB, 1)
+    }
+    return newPos
   }
 
 
