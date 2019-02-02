@@ -87,25 +87,18 @@ function Level(){
 	}
 
   this.collision = function(oldPos,newPos){
-    if(this.level[Math.floor((newPos.z+scale/2)/scale)][Math.floor((newPos.x+scale/2)/scale)].wall){
-    //renderer.setClearColor(0xFF0000, 1)
-      if(this.level[Math.floor((newPos.z+scale/2)/scale)][Math.floor((oldPos.x+scale/2)/scale)].wall){
-        newPos.z = Math.floor(newPos.z/scale)*scale + scale/2
-        if(newPos.z > oldPos.z) newPos.z -= 2.1
-        if(newPos.z < oldPos.z) newPos.z += 2.1
-      }
-      if(this.level[Math.floor((oldPos.z+scale/2)/scale)][Math.floor((newPos.x+scale/2)/scale)].wall){
-        newPos.x = Math.floor(newPos.x/scale) * scale + scale/2
-        if(newPos.x > oldPos.x) newPos.x -= 2.1
-        if(newPos.x < oldPos.x) newPos.x += 2.1
-      }
+    if(this.level[Math.floor((newPos.z+scale/2)/scale)][Math.floor((oldPos.x+scale/2)/scale)].wall){
+      newPos.z = Math.floor(newPos.z/scale)*scale + scale/2
+      if(newPos.z > oldPos.z) newPos.z -= 0.001
+      else if(newPos.z < oldPos.z) newPos.z += 0.001
     }
-    else{
-      renderer.setClearColor(0x87CEEB, 1)
+    if(this.level[Math.floor((oldPos.z+scale/2)/scale)][Math.floor((newPos.x+scale/2)/scale)].wall){
+      newPos.x = Math.floor(newPos.x/scale) * scale + scale/2
+      if(newPos.x > oldPos.x) newPos.x -= 0.001
+      else if(newPos.x < oldPos.x) newPos.x += 0.001
     }
     return newPos
   }
-
 
   /*Todo:Fix this
 	this.clear = function(){
