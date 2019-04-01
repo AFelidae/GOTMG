@@ -10,25 +10,48 @@ addEventListener("keyup", function (e) {
 
 var camera, scene;
 
-var startPos = {x:4*Game.Settings.Scale,z:4*Game.Settings.Scale}
+var startPos = {x:4*GOTMG.Settings.Scale,z:4*GOTMG.Settings.Scale}
 
 camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
 camera.position.z = 400;
 scene = new THREE.Scene();
 
-function Character(position,properties,elevation){
 
+function Sprite(elevation,position,properties){
+  this.elevation = elevation
+  this.size = properties.size
+  if(!this.size) this.size = 1
+  this.texture = properties.texture
+  if(!this.texture) this.texture = 0
+
+  this.sprite = new THREE.Sprite(new THREE.SpriteMaterial({map:GOTMG.Textures[this.texture],color:0xffffff}))
+
+  this.sprite.position.x = position.x
+  this.sprite.position.y = this.elevation * GOTMG.Settings.Scale
+  this.sprite.position.z = position.z
+
+  this.sprite.scale.set(GOTMG.Settings.Scale * this.size ,GOTMG.Settings.Scale * this.size, 1)
+
+  scene.add(this.sprite)
 }
 
-function Projectile(position,properties,elevation){
+function Projectile(elevation,position,properties){
+  this.elevation = elevation
   this.color = properties.color
   if(!this.color) this.color = 0xFFFFFF
-  this.size = this.size
-  if(!this.size) this.size = 15
+  this.size = properties.size
+  if(!this.size) this.size = 0.5
 
   this.projectile = new THREE.Mesh(
-
+    new THREE.SphereGeometry(this.size * GOTMG.Settings.Scale, GOTMG.Settings.MeshQuality, GOTMG.Settings.MeshQuality),
+    new THREE.MeshBasicMaterial({color:this.color})
   )
+
+  this.projectile.position.x = position.x
+  this.projectile.position.y = elevation * GOTMG.Settings.Scale
+  this.projectile.position.z = position.z
+
+  scene.add(this.projectile)
 }
 
 function Level(layout,elevation){
@@ -41,41 +64,41 @@ function Level(layout,elevation){
 	    //Create a wall if there is one
 	    if(layout[y][x].wall > 0){
 	      this.level[y][x].wall=new THREE.Mesh(
-	          Game.Geometry.Wall,
-	          new THREE.MeshBasicMaterial({map: Game.Textures[layout[y][x].wall-1]})
+	          GOTMG.Geometry.Wall,
+	          new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].wall-1], side: THREE.DoubleSide})
 	      )
-	      this.level[y][x].wall.position.x = Game.Settings.Scale * x
-        this.level[y][x].wall.position.z = Game.Settings.Scale * y
+	      this.level[y][x].wall.position.x = GOTMG.Settings.Scale * x
+        this.level[y][x].wall.position.z = GOTMG.Settings.Scale * y
 
-	      this.level[y][x].wall.position.y = this.elevation * Game.Settings.Scale
+	      this.level[y][x].wall.position.y = this.elevation * GOTMG.Settings.Scale
 
 	      scene.add(this.level[y][x].wall)
 	      }
 
 	    if(layout[y][x].roof > 0){
 	      this.level[y][x].roof = new THREE.Mesh(
-	        Game.Geometry.Surface,
-	        new THREE.MeshBasicMaterial({map: Game.Textures[layout[y][x].roof-1]})
+	        GOTMG.Geometry.Surface,
+	        new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].roof-1], side: THREE.DoubleSide})
 	      )
 
-       this.level[y][x].roof.position.x = Game.Settings.Scale * x
-       this.level[y][x].roof.position.z = Game.Settings.Scale * y
+       this.level[y][x].roof.position.x = GOTMG.Settings.Scale * x
+       this.level[y][x].roof.position.z = GOTMG.Settings.Scale * y
        this.level[y][x].roof.rotation.x = -Math.PI / 2
 
-       this.level[y][x].roof.position.y = this.elevation * Game.Settings.Scale - (Game.Settings.Scale / 2)
+       this.level[y][x].roof.position.y = this.elevation * GOTMG.Settings.Scale - (GOTMG.Settings.Scale / 2)
 
        scene.add(this.level[y][x].roof)
 	    }
 	    if(layout[y][x].ground > 0){
 	      this.level[y][x].ground = new THREE.Mesh(
-	          Game.Geometry.Surface,
-	          new THREE.MeshBasicMaterial({map: Game.Textures[layout[y][x].ground-1]})
+	          GOTMG.Geometry.Surface,
+	          new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].ground-1], side: THREE.DoubleSide})
         )
-        this.level[y][x].ground.position.x = Game.Settings.Scale * x
-        this.level[y][x].ground.position.z = Game.Settings.Scale * y
+        this.level[y][x].ground.position.x = GOTMG.Settings.Scale * x
+        this.level[y][x].ground.position.z = GOTMG.Settings.Scale * y
         this.level[y][x].ground.rotation.x = Math.PI / 2
 
-        this.level[y][x].ground.position.y = this.elevation * Game.Settings.Scale + (Game.Settings.Scale / 2)
+        this.level[y][x].ground.position.y = this.elevation * GOTMG.Settings.Scale + (GOTMG.Settings.Scale / 2)
 
         scene.add(this.level[y][x].ground)
 	    }
@@ -83,13 +106,13 @@ function Level(layout,elevation){
 	}
 
   this.collision = function(oldPos,newPos){
-    if(this.level[Math.floor((newPos.z+Game.Settings.Scale/2)/Game.Settings.Scale)][Math.floor((oldPos.x+Game.Settings.Scale/2)/Game.Settings.Scale)].wall){
-      newPos.z = Math.floor(newPos.z/Game.Settings.Scale)*Game.Settings.Scale + Game.Settings.Scale/2
+    if(this.level[Math.floor((newPos.z+GOTMG.Settings.Scale/2)/GOTMG.Settings.Scale)][Math.floor((oldPos.x+GOTMG.Settings.Scale/2)/GOTMG.Settings.Scale)].wall){
+      newPos.z = Math.floor(newPos.z/GOTMG.Settings.Scale)*GOTMG.Settings.Scale + GOTMG.Settings.Scale/2
       if(newPos.z > oldPos.z) newPos.z -= 0.001
       else if(newPos.z < oldPos.z) newPos.z += 0.001
     }
-    if(this.level[Math.floor((oldPos.z+Game.Settings.Scale/2)/Game.Settings.Scale)][Math.floor((newPos.x+Game.Settings.Scale/2)/Game.Settings.Scale)].wall){
-      newPos.x = Math.floor(newPos.x/Game.Settings.Scale) * Game.Settings.Scale + Game.Settings.Scale/2
+    if(this.level[Math.floor((oldPos.z+GOTMG.Settings.Scale/2)/GOTMG.Settings.Scale)][Math.floor((newPos.x+GOTMG.Settings.Scale/2)/GOTMG.Settings.Scale)].wall){
+      newPos.x = Math.floor(newPos.x/GOTMG.Settings.Scale) * GOTMG.Settings.Scale + GOTMG.Settings.Scale/2
       if(newPos.x > oldPos.x) newPos.x -= 0.001
       else if(newPos.x < oldPos.x) newPos.x += 0.001
     }
