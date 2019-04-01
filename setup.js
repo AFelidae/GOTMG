@@ -65,7 +65,7 @@ function Level(layout,elevation){
 	    if(layout[y][x].wall > 0){
 	      this.level[y][x].wall=new THREE.Mesh(
 	          GOTMG.Geometry.Wall,
-	          new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].wall-1], side: THREE.DoubleSide})
+	          new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].wall], side: THREE.DoubleSide})
 	      )
 	      this.level[y][x].wall.position.x = GOTMG.Settings.Scale * x
         this.level[y][x].wall.position.z = GOTMG.Settings.Scale * y
@@ -78,7 +78,7 @@ function Level(layout,elevation){
 	    if(layout[y][x].roof > 0){
 	      this.level[y][x].roof = new THREE.Mesh(
 	        GOTMG.Geometry.Surface,
-	        new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].roof-1], side: THREE.DoubleSide})
+	        new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].roof], side: THREE.DoubleSide})
 	      )
 
        this.level[y][x].roof.position.x = GOTMG.Settings.Scale * x
@@ -92,7 +92,7 @@ function Level(layout,elevation){
 	    if(layout[y][x].ground > 0){
 	      this.level[y][x].ground = new THREE.Mesh(
 	          GOTMG.Geometry.Surface,
-	          new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].ground-1], side: THREE.DoubleSide})
+	          new THREE.MeshBasicMaterial({map: GOTMG.Textures[layout[y][x].ground], side: THREE.DoubleSide})
         )
         this.level[y][x].ground.position.x = GOTMG.Settings.Scale * x
         this.level[y][x].ground.position.z = GOTMG.Settings.Scale * y

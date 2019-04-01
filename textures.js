@@ -29,7 +29,7 @@ renderer.setClearColor(0x87CEEB, 1)
 document.body.appendChild(renderer.domElement)
 window.addEventListener('resize', onWindowResize, false);
 
-for(a=0;a<2;a++){
+for(a=0;a<=2;a++){
   GOTMG.Textures.push(new THREE.TextureLoader().load('Assets/Tiles/t_'+a+'.png'))
   GOTMG.Textures[a].minFilter = THREE.NearestFilter
   GOTMG.Textures[a].magFilter = THREE.NearestFilter
