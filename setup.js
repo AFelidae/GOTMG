@@ -82,7 +82,7 @@ class Level{
   	      this.level[y][x].wall.position.y = GOTMG.ToScale(this.elevation)
 
   	      scene.add(this.level[y][x].wall)
-  	      }
+  	    }
 
   	    if(layout[y][x].roof > 0){
   	      this.level[y][x].roof = new THREE.Mesh(
@@ -98,6 +98,7 @@ class Level{
 
          scene.add(this.level[y][x].roof)
   	    }
+        
   	    if(layout[y][x].ground > 0){
   	      this.level[y][x].ground = new THREE.Mesh(
   	          GOTMG.Geometry.Surface,
@@ -111,6 +112,7 @@ class Level{
 
           scene.add(this.level[y][x].ground)
   	    }
+
   	  }
   	}
   }
