@@ -1,8 +1,8 @@
-#GOTMG
+# GOTMG
 This was largely inspired by a online flash game "realm of the mad god"
 I wanted to recreate it from the first person perspective and in a 3d space
 
-###Controls
+### Controls
 ```
 W = Walk Forward
 S = Walk Backward
@@ -12,13 +12,13 @@ J = Turn Left
 L = Turn Right
 ```
 
-###Level Editor
+### Level Editor
 There is a default level that I used for testing the collision system
 But if you want to go further you can make your own level with the level editor
 https://github.com/AnotherEntity/GOTMG-LevelEditor
 If you want to play your own can export it to json and set the `myLevel` variable in game.js
 
-###Future Plans
+### Future Plans
 * ~~player movement~~
 * ~~world loader~~
 * ~~level editor~~
