@@ -1,3 +1,24 @@
+//Tracks which keys are pressed
+var keysDown = {}
+
+addEventListener("keydown", function (e) {
+  keysDown[e.keyCode] = true;
+}, false)
+
+addEventListener("keyup", function (e) {
+  delete keysDown[e.keyCode];
+}, false)
+
+//Setups up camera and scene
+var camera, scene;
+
+var startPos = {x:GOTMG.ToScale(4),z:GOTMG.ToScale(4)}
+
+camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 10000);
+camera.position.z = 400;
+scene = new THREE.Scene()
+
+
 //Simple level made with gotmg level editor
 myLevel = JSON.parse('[[{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2}],[{"wall":2},{},{},{},{},{},{"wall":2},{"ground":2},{"ground":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"roof":2},{"roof":2},{"wall":2}],[{"wall":2},{},{},{},{},{},{"wall":2},{"ground":2},{"ground":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"roof":2},{"roof":2},{"wall":2}],[{"wall":2},{},{},{},{},{},{"wall":2},{"ground":2},{"ground":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"roof":2},{"roof":2},{"wall":2}],[{"wall":2},{},{},{},{},{},{"wall":2},{"ground":2},{"ground":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"roof":2},{"roof":2},{"wall":2}],[{"wall":2},{},{},{},{},{},{"wall":2},{"ground":2},{"ground":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"ground":2,"roof":2},{"roof":2},{"roof":2},{"wall":2}],[{"wall":2},{"wall":2},{"wall":2},{},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2}],[{"wall":2},{},{},{},{},{},{"wall":2},{},{},{},{},{},{},{},{"wall":2}],[{"wall":2},{},{"wall":2},{},{"wall":2},{},{"wall":2},{},{},{},{},{},{},{},{"wall":2}],[{"wall":2},{},{},{},{},{},{"wall":2},{},{},{},{},{},{},{},{"wall":2}],[{"wall":2},{},{"wall":2},{},{"wall":2},{},{"wall":2},{},{},{},{},{},{},{},{"wall":2}],[{"wall":2},{},{},{},{},{},{},{},{},{},{},{},{},{"wall":2},{}],[{"wall":2},{},{"wall":2},{},{"wall":2},{},{"wall":2},{},{},{},{},{},{"wall":2},{},{}],[{"wall":2},{},{},{},{},{},{"wall":2},{},{},{},{},{"wall":2},{},{},{}],[{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{"wall":2},{},{},{},{}]]')
 
