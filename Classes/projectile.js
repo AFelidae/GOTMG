@@ -1,6 +1,5 @@
 class Projectile{
-  constructor(elevation,position,properties){
-    this.elevation = elevation
+  constructor(position,properties){
     this.color = properties.color
     if(!this.color) this.color = 0xFFFFFF
     this.size = properties.size
@@ -12,7 +11,7 @@ class Projectile{
     )
 
     this.projectile.position.x = position.x
-    this.projectile.position.y = GOTMG.ToScale(elevation)
+    this.projectile.position.y = 0
     this.projectile.position.z = position.z
 
     scene.add(this.projectile)

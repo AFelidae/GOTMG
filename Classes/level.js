@@ -1,6 +1,5 @@
 class Level{
-  constructor(layout,elevation){
-    this.elevation = elevation
+  constructor(layout){
     this.level = []
   	for(var y=0;y<layout.length;y++){
   	  this.level.push([])
@@ -15,7 +14,7 @@ class Level{
   	      this.level[y][x].wall.position.x = GOTMG.ToScale(x)
           this.level[y][x].wall.position.z = GOTMG.ToScale(y)
 
-  	      this.level[y][x].wall.position.y = GOTMG.ToScale(this.elevation)
+  	      this.level[y][x].wall.position.y = 0
 
   	      scene.add(this.level[y][x].wall)
   	    }
@@ -30,11 +29,11 @@ class Level{
          this.level[y][x].roof.position.z = GOTMG.ToScale(y)
          this.level[y][x].roof.rotation.x = -Math.PI / 2
 
-         this.level[y][x].roof.position.y = GOTMG.ToScale(this.elevation) - (GOTMG.ToScale(0.5))
+         this.level[y][x].roof.position.y = -GOTMG.ToScale(0.5)
 
          scene.add(this.level[y][x].roof)
   	    }
-        
+
   	    if(layout[y][x].ground > 0){
   	      this.level[y][x].ground = new THREE.Mesh(
   	          GOTMG.Geometry.Surface,
@@ -44,7 +43,7 @@ class Level{
           this.level[y][x].ground.position.z = GOTMG.ToScale(y)
           this.level[y][x].ground.rotation.x = Math.PI / 2
 
-          this.level[y][x].ground.position.y = GOTMG.ToScale(this.elevation) + (GOTMG.ToScale(0.5))
+          this.level[y][x].ground.position.y =  GOTMG.ToScale(0.5)
 
           scene.add(this.level[y][x].ground)
   	    }
