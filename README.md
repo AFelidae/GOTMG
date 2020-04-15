@@ -15,7 +15,7 @@ L = Turn Right
 ### Level Editor
 There is a default level that I used for testing the collision system
 But if you want to go further you can make your own level with the level editor
-https://github.com/AnotherEntity/GOTMG-LevelEditor
+https://github.com/AFelidae/GOTMG-LevelEditor
 If you want to play your own can export it to json and set the `myLevel` variable in game.js
 
 ### Future Plans
